@@ -6,7 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
-
 import com.vini.demo.entities.User;
 import com.vini.demo.repository.UseRepository;
 
@@ -23,7 +22,7 @@ public class TestConfig implements CommandLineRunner{
 		User u2 = new User(null, "Alex Green", "alex@gmail.com", "977777777", "123456");
 		
 		// Comando para salvar no bando de dados, nesse caso estamos passando uma lista.
-		useRepository.saveAllAndFlush(Arrays.asList(u1,u2));
+		useRepository.saveAll(Arrays.asList(u1,u2));
 	}
 	
 }
