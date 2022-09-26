@@ -12,6 +12,7 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @Table(name = "payment")
@@ -26,6 +27,7 @@ public class Payment {
 	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy/MM/dd'T'HH:mm:ss'Z'", timezone = "GMT")
 	private Instant moment;
 	
+	@JsonIgnore
 	@OneToOne
 	@MapsId // @MapsId é usada para especificar que o identificador de entidade é mapeado pelo @ManyToOne atualmente anotado ou @OneToOne associado
 	private Order order;
