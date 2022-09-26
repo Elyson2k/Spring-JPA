@@ -9,6 +9,7 @@ import org.springframework.context.annotation.Configuration;
 import com.vini.demo.entities.Category;
 import com.vini.demo.entities.Order;
 import com.vini.demo.entities.OrderItem;
+import com.vini.demo.entities.Payment;
 import com.vini.demo.entities.Product;
 import com.vini.demo.entities.User;
 import com.vini.demo.entities.enums.OrderStatus;
@@ -35,6 +36,7 @@ public class TestConfig implements CommandLineRunner{
 	
 	@Autowired // O Spring na hora que tiver rodando a aplicação, vai resolver o problema de dependencia.
 	private OrderItemRepository orderItemRepository;
+	
 
 	@Override // O Spring na hora que tiver rodando a aplicação, vai resolver o problema de dependencia.
 	public void run(String... args) throws Exception {
@@ -82,6 +84,14 @@ public class TestConfig implements CommandLineRunner{
 		OrderItem oi4 = new OrderItem(o3, p5, 2, p5.getPrice()); 
 		
 		orderItemRepository.saveAll(Arrays.asList(oi1,oi2,oi3,oi4));
+		
+		Payment pay1 = new Payment(null, Instant.parse("2019-06-20T21:53:07Z"), o1);
+		
+		// Em uma relação 1 para 1, você não vai chamar o repository do proprio objeto não.
+		
+		o1.setPayment(pay1);
+		
+		orderRepository.save(o1);
 		
 	}
 	
