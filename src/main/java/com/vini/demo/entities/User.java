@@ -1,13 +1,18 @@
 package com.vini.demo.entities;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity // Dizendo que é uma entidade do meu bando de dados.
 @Table(name = "users")
@@ -23,6 +28,15 @@ public class User implements Serializable{ // Serializable serve para que o obje
 	private String phone;
 	private String password;
 	
+	@JsonIgnore // Comando com o intuito de não causar loop, pois vai um pedido vai chamar um cliente, um cliete vai chamar um pedido, e fica nesse loot.
+	@OneToMany(mappedBy = "client") // Relação 1 para muitos, tem que passar um mappedBy = "Obj que ta na classe Order"
+	private List<Order> orders = new ArrayList<>();
+
+	
+	public List<Order> getOrders() {
+		return orders;
+	}
+
 	public User() {
 	}
 
