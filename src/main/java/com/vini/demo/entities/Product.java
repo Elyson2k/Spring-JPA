@@ -29,9 +29,9 @@ public class Product implements Serializable{ // Serializable serve para que o o
 	private String imgUrl;
 	
 	@ManyToMany // Relação muitos p muitos.
-	@JoinTable(name = "tb_products_category",
-	joinColumns = @JoinColumn(name = "product_id"),
-	inverseJoinColumns = @JoinColumn(name = "category_id"))
+	@JoinTable(name = "tb_products_category", // Dando um nome para tabela de relação entre product e category
+	joinColumns = @JoinColumn(name = "product_id"), // Dizendo que a tabela "tb_products_category" tem uma coluna product_id
+	inverseJoinColumns = @JoinColumn(name = "category_id")) // Dizendo que a tabela "tb_products_category" tem uma coluna category_id
 	private Set<Category> categories = new HashSet<>();
 
 	public Product(Long id, String name, String description, Double price, String imgUrl) {

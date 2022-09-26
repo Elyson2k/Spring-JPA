@@ -1,7 +1,9 @@
 package com.vini.demo.entities;
 import java.io.Serializable;
 import java.time.Instant;
+import java.util.HashSet;
 import java.util.Objects;
+import java.util.Set;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -9,9 +11,11 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.vini.demo.entities.enums.OrderStatus;
 
 @Entity
@@ -20,9 +24,13 @@ public class Order implements Serializable{ // Serializable serve para que o obj
 	// ser gravado em arquivods, e por ai vai.
 	private static final long serialVersionUID = 1L;
 	
+	
+	
 	@Id // Dizendo qual campo vai ser a PK(Primary Key)
 	@GeneratedValue(strategy=GenerationType.IDENTITY) // Incrementando automaticamente o ID.
 	private Long id;
+	
+	
 	
 	// Para garantir que meu instante seja mostrado la no Json no formato da ISO 8601, usa este comando.
 	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy/MM/dd'T'HH:mm:ss'Z'", timezone = "GMT")
@@ -36,9 +44,17 @@ public class Order implements Serializable{ // Serializable serve para que o obj
 	@JoinColumn(name = "client_id") // Dando o nome da columa de "client_id".
 	private User client;
 	
+	
+	@OneToMany(mappedBy = "id.order") // Relaçao um p muitos.
+	private Set<OrderItem> items = new HashSet<>();
+	
+	
+	
 	public Order() {
 	}
 
+	
+	
 	public Order(Long id, Instant moment,OrderStatus orderStatus, User client) {
 		super();
 		this.id = id;
@@ -82,6 +98,10 @@ public class Order implements Serializable{ // Serializable serve para que o obj
 	@Override
 	public int hashCode() {
 		return Objects.hash(id);
+	}
+	
+	public Set<OrderItem> getItems(){
+		return items;
 	}
 
 	@Override
