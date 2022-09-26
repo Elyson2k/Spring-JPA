@@ -12,12 +12,10 @@ import com.vini.demo.repository.CategoryRepository;
 @Component // Registrando classe como um componente do Spring. Registradores: @Service, @Component, @Repository
 public class CategoryService {
 
-	@Autowired // Dependencia da classe UseRepository, mas o Spring com o Autowired arruma essa
-				// dependencia.
+	@Autowired // Dependencia da classe UseRepository, mas o Spring com o Autowired arruma essa	dependencia.
 	private CategoryRepository repository;
 
-	// Método usado para retornar uma lista de usuario, como se fosse um SELECT *
-	// FROM users.
+	// Método usado para retornar uma lista de usuario, como se fosse um SELECT * FROM users.
 	public List<Category> findAll() {
 		return repository.findAll();
 	}

@@ -10,6 +10,7 @@ import javax.persistence.Table;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.vini.demo.entities.pk.OrdemItemPK;
 
+
 @Entity
 @Table(name = "tb_order_item")
 public class OrderItem implements Serializable{ // Serializable serve para que o objeto trafegue na rede, possa
@@ -19,12 +20,12 @@ public class OrderItem implements Serializable{ // Serializable serve para que o
 	
 	/* Sempre que você for criar uma classe auxiliar que é um ID composto, você tem que instanciar ela 
 	 * como esta abaixo. */
+	
 	@EmbeddedId
 	private OrdemItemPK id = new OrdemItemPK();
 	
 	private Integer quantity;
 	private Double price;
-	
 	public OrderItem() {		
 	}
 

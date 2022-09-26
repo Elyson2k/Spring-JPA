@@ -94,6 +94,7 @@ public class Order implements Serializable{ // Serializable serve para que o obj
 	public void setClient(User client) {
 		this.client = client;
 	}
+	
 
 	@Override
 	public int hashCode() {

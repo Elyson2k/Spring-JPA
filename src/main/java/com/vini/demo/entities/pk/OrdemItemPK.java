@@ -15,11 +15,11 @@ public class OrdemItemPK implements Serializable{
 	private static final long serialVersionUID = 1L;
 	
 	@ManyToOne
-	@JoinColumn(name = "order_id")
+	@JoinColumn(name = "order_id") // Criando coluna order_id.
 	private Order order;
 	
 	@ManyToOne
-	@JoinColumn(name = "product_id")
+	@JoinColumn(name = "product_id") // Criando coluna product_id. 
 	private Product product;
 	
 	public Order getOrder() {

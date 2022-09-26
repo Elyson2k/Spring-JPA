@@ -12,13 +12,20 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @Table(name = "products")
 public class Product implements Serializable{ // Serializable serve para que o objeto trafegue na rede, possa
 	// ser gravado em arquivods, e por ai vai.
 	private static final long serialVersionUID = 1L;
+	
+	
+	
+	
 	
 	@Id // Dizendo qual campo vai ser a PK(Primary Key)
 	@GeneratedValue(strategy=GenerationType.IDENTITY) // Incrementando automaticamente o ID.
@@ -28,12 +35,26 @@ public class Product implements Serializable{ // Serializable serve para que o o
 	private Double price;
 	private String imgUrl;
 	
+	
+	
+	
+	
 	@ManyToMany // Relação muitos p muitos.
-	@JoinTable(name = "tb_products_category", // Dando um nome para tabela de relação entre product e category
+	@JoinTable(name = "tb_products_category", // Criando uma tabela de relação entre product e category.
 	joinColumns = @JoinColumn(name = "product_id"), // Dizendo que a tabela "tb_products_category" tem uma coluna product_id
 	inverseJoinColumns = @JoinColumn(name = "category_id")) // Dizendo que a tabela "tb_products_category" tem uma coluna category_id
 	private Set<Category> categories = new HashSet<>();
 
+	
+	
+	
+	@OneToMany(mappedBy = "id.product")
+	private Set<OrderItem> items = new HashSet<>();
+	
+	
+	
+	
+	
 	public Product(Long id, String name, String description, Double price, String imgUrl) {
 		super();
 		this.id = id;
@@ -89,7 +110,16 @@ public class Product implements Serializable{ // Serializable serve para que o o
 	public Set<Category> getCategories() {
 		return categories;
 	}
-
+	
+	@JsonIgnore
+	public Set<Order> getOrders(){
+		Set<Order> set = new HashSet<>();
+		for (OrderItem x : items) {
+			set.add(x.getOrder());
+		}
+		return set;
+	}
+	
 	@Override
 	public int hashCode() {
 		return Objects.hash(id);
