@@ -13,6 +13,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -63,8 +64,17 @@ public class UserResource {
 		
 		// o .patch vai receber um padrão para montar minha sql, ele vai receber o id, e o buildAndExpand vai pegar o id inserido.
 		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(obj.getId()).toUri();
-		return ResponseEntity.created(uri).body(obj);
+		return ResponseEntity.created(uri).body(obj);		
+	}
+	
+	@DeleteMapping(value = "/{id}") // Anotação usada para deletar usuarios.
+	public ResponseEntity<User> delete(@PathVariable Long id){
+		useService.delete(id);
 		
+		// O noContent vai retornar para mim uma resposta vazia, e o codigo HTTP de uma reposta
+		// que n tem conteudo, é o 204, ele ja trata isso para eu tbm.
+		
+		return ResponseEntity.noContent().build();
 	}
 	
 	
