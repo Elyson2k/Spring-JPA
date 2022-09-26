@@ -13,8 +13,8 @@ import javax.persistence.Table;
 import javax.persistence.Transient;
 
 @Entity
-@Table(name = "categorys")
-public class Category implements Serializable{ // Serializable serve para que o objeto trafegue na rede, possa
+@Table(name = "products")
+public class Product implements Serializable{ // Serializable serve para que o objeto trafegue na rede, possa
 	// ser gravado em arquivods, e por ai vai.
 	private static final long serialVersionUID = 1L;
 	
@@ -22,16 +22,23 @@ public class Category implements Serializable{ // Serializable serve para que o 
 	@GeneratedValue(strategy=GenerationType.IDENTITY) // Incrementando automaticamente o ID.
 	private Long id;
 	private String name;
+	private String description;
+	private Double price;
+	private String imgUrl;
 	
 	@Transient // Vai empedir que o JPA tente interpretar isso daqui.
-	private Set<Product> products = new HashSet<>();
-	
-	public Category() {
-	}
+	private Set<Category> categories = new HashSet<>();
 
-	public Category(Long id, String name) {
+	public Product(Long id, String name, String description, Double price, String imgUrl) {
+		super();
 		this.id = id;
 		this.name = name;
+		this.description = description;
+		this.price = price;
+		this.imgUrl = imgUrl;
+	}
+	
+	public Product() {
 	}
 
 	public Long getId() {
@@ -49,9 +56,33 @@ public class Category implements Serializable{ // Serializable serve para que o 
 	public void setName(String name) {
 		this.name = name;
 	}
-	
-	public Set<Product> getProducts() {
-		return products;
+
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
+	}
+
+	public Double getPrice() {
+		return price;
+	}
+
+	public void setPrice(Double price) {
+		this.price = price;
+	}
+
+	public String getImgUrl() {
+		return imgUrl;
+	}
+
+	public void setImgUrl(String imgUrl) {
+		this.imgUrl = imgUrl;
+	}
+
+	public Set<Category> getCategories() {
+		return categories;
 	}
 
 	@Override
@@ -67,11 +98,9 @@ public class Category implements Serializable{ // Serializable serve para que o 
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		Category other = (Category) obj;
+		Product other = (Product) obj;
 		return Objects.equals(id, other.id);
 	}
-
-	
 	
 	
 	
